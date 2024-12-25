@@ -11,7 +11,7 @@ runs:
   using: "composite"
   steps:
     - name: CD結果通知
-      if: ${{ vars.CD_NOTIFY_ENABLED == 'true' && !cancelled() }}
+      if: ${{ vars.CD_NOTIFY_ENABLED == 'true' }}
       uses: slackapi/slack-github-action@v2.0.0
       env:
         STATUS_MSG: ${{ inputs.job-status == 'success' && vars.SUCCESS_MSG || vars.FAILURE_MSG }}
