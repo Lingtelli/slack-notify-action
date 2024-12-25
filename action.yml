@@ -1,0 +1,24 @@
+name: Slack Notify Action
+description: 利用Slack進行CI CD結果通知
+
+inputs:
+  token:
+    description: Slack Bot Token
+    required: true
+  job-status:
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: CD結果通知
+      if: ${{ vars.CD_NOTIFY_ENABLED == 'true' && !cancelled() }}
+      uses: slackapi/slack-github-action@v2.0.0
+      env:
+        STATUS_MSG: ${{ inputs.job-status == 'success' && vars.SUCCESS_MSG || vars.FAILURE_MSG }}
+        BUILD_LINK: ${{ gitea.server_url }}/${{ gitea.repository }}/actions/runs/${{ gitea.run_number }}
+      with:
+        method: chat.postMessage
+        token: ${{ inputs.token }}
+        payload: |
+          channel: ${{ vars.SLACK_TEST_CHANNEL_ID }}
+          text: "${{ gitea.repository }} ${{ gitea.ref_name }}版\n${{ gitea.workflow }}/${{ gitea.job }}\n${{ env.STATUS_MSG }}\nlogs: ${{ env.BUILD_LINK }}"
