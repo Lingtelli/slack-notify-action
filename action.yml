@@ -20,5 +20,5 @@ runs:
         method: chat.postMessage
         token: ${{ inputs.token }}
         payload: |
-          channel: ${{ vars.SLACK_TEST_CHANNEL_ID }}
+          channel: ${{ vars.SLACK_CHANNEL_ID }}
           text: "${{ gitea.repository }} ${{ gitea.ref_name }}版\n${{ gitea.workflow }}/${{ gitea.job }}\n${{ env.STATUS_MSG }}\nlogs: ${{ env.BUILD_LINK }}"
