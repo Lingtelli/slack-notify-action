@@ -21,4 +21,4 @@ runs:
         token: ${{ inputs.token }}
         payload: |
           channel: ${{ vars.SLACK_CHANNEL_ID }}
-          text: "${{ github.repository }} ${{ github.ref_name }}版\n${{ github.workflow }}/${{ github.job }}\n${{ env.STATUS_MSG }}\nCommit: ${{ github.event.head_commit.message }}\nlogs: ${{ env.BUILD_LINK }}"
+          text: "${{ github.event.repository.name }} ${{ github.ref_name }}版\n${{ github.workflow }}/${{ github.job }}\n${{ env.STATUS_MSG }}\nCommit: ${{ github.event.head_commit.message }}\nlogs: ${{ env.BUILD_LINK }}"
